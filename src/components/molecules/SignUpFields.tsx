@@ -14,12 +14,8 @@ import {
 } from "react-icons/fa";
 import { useState } from "react";
 
-interface SignUpFieldsProps {
-  register: UseFormRegister<FieldValues>;
-  errors: any;
-}
-
-export default function SignUpFields({ register, errors }: SignUpFieldsProps) {
+ 
+export default function SignUpFields({ register, errors }: any) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   return (

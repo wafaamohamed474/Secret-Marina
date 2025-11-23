@@ -7,12 +7,9 @@ import FormLink from "../atoms/FormLink";
  
 import { useState } from "react";
 
-interface LoginFieldsProps {
-  register: UseFormRegister<FieldValues>;
-  errors: any;
-}
+ 
 
-export default function LoginFields({ register, errors }: LoginFieldsProps) {
+export default function LoginFields({ register, errors }: any) {
  
   const [showPassword, setShowPassword] = useState(false);
   return (

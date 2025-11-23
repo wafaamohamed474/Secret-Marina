@@ -6,15 +6,12 @@ import AuthInput from "../atoms/AuthInput";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import { useState } from "react";
 
-interface SetNewPasswordFieldsProps {
-  register: UseFormRegister<FieldValues>;
-  errors: any;
-}
+ 
 
 export default function SetNewPasswordFields({
   register,
   errors,
-}: SetNewPasswordFieldsProps) {
+}: any) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   return (

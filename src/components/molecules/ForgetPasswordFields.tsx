@@ -5,15 +5,12 @@ import AuthInput from "../atoms/AuthInput";
 
 import { FaMobile } from "react-icons/fa";
 
-interface ForgetPasswordFieldsProps {
-  register: UseFormRegister<FieldValues>;
-  errors: any;
-}
+ 
 
 export default function ForgetPasswordFields({
   register,
   errors,
-}: ForgetPasswordFieldsProps) {
+}: any) {
   return (
     <div className="grid gap-6">
       {/* PHONE NUMBER */}
