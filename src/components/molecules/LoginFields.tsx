@@ -12,6 +12,7 @@ import { useState } from "react";
 export default function LoginFields({ register, errors }: any) {
  
   const [showPassword, setShowPassword] = useState(false);
+  
   return (
     <div className="grid gap-6">
       {/* Phone number */}
@@ -30,26 +31,7 @@ export default function LoginFields({ register, errors }: any) {
         )}
       </div>
 
-      {/* PASSWORD */}
-      <div className="space-y-2">
-        <AuthInput
-          label="Password"
-          id="password"
-          type={showPassword ? "text" : "password"}
-          placeholder="Enter your password"
-          iconLeft={<FaLock />}
-          iconRight={showPassword ? <FaEye /> : <FaEyeSlash />}
-          onRightIconClick={() => setShowPassword(!showPassword)}
-          {...register("password")}
-        />
-        
-        {errors.password && (
-          <p className="text-red-500 text-sm">{errors.password.message}</p>
-        )}
-        <div className="w-full flex justify-end items-center">
-          <FormLink label="" link="Forget Password?" path="/" />
-        </div>
-      </div>
+     
     </div>
   );
 }

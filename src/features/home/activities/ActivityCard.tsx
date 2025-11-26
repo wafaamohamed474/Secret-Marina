@@ -1,51 +1,109 @@
-"use client";
-import Image, { StaticImageData } from "next/image";
-import { FaClock, FaStar, FaUser } from "react-icons/fa";
+// "use client";
+import Image from "next/image";
+import {
+  FaHeart,
+  FaRegClock,
+  FaRegHeart,
+  FaStar,
+  FaUser,
+} from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 
+import Riyalsvg from "@/assets/images/Riyal.svg";
+import RiyalRedsvg from "@/assets/images/RiyalRed.svg";
+import { ActivityYouDontMiss } from "@/types/types";
+
 type ActivityCardProps = {
-  title: string;
-  img: string | StaticImageData;
+  data: ActivityYouDontMiss;
 };
 
-export default function ActivityCard({ title, img }: ActivityCardProps) {
+export default function ActivityCard({ data }: ActivityCardProps) {
   return (
     <div className="rounded-2xl  shadow-[0_0_3px_0_var(--primary)] bg-(--background) ">
       <div className="relative w-full h-36 rounded-2xl overflow-hidden">
-        <Image src={img} alt={title} fill className="object-cover" />
+        <Image
+          src={data?.images[0]?.path}
+          alt={data?.title}
+          fill
+          className="object-cover"
+        />
+        <button
+          className="
+            absolute top-2 right-2 
+            bg-(--background) backdrop-blur 
+            w-8 h-8 rounded-full flex items-center justify-center
+            shadow-md
+          "
+        >
+          {data?.is_favorited ? (
+            <FaHeart className="text-(--offer) text-sm" />
+          ) : (
+            <FaRegHeart className="text-(--offer) text-sm" />
+          )}
+        </button>
       </div>
 
       <div className="pt-3 pb-4 px-2 space-y-2">
         <div className="flex justify-between items-center">
           <p className="text-sm font-semibold text-center text-(--text-black)">
-            {title}
+            {data?.title}
           </p>
-          <span className="text-(--price) text-xs font-semibold">ريال</span>
+          <div className="flex items-center gap-1">
+            <span className="text-xs text-(--price) font-semibold">
+              {data?.price_before_discount}
+            </span>
+            <div className="w-4 h-4 relative">
+              <Image
+                src={Riyalsvg}
+                alt="Riyal"
+                fill
+                className="object-contain"
+                quality={100}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-between items-center">
           <p className="text-xs font-medium text-center text-(--paragraph-text)">
-            Excursion Boat Trips
+            {data?.trip?.title}
           </p>
-          <span className="text-(--offer) text-xs font-semibold">1000ريال</span>
+          <div className="flex items-center gap-1 ">
+            <span className="text-[10px] text-(--offer) font-semibold line-through">
+              {data?.price_after_discount}
+            </span>
+            <div className="w-3 h-3 relative">
+              <Image
+                src={RiyalRedsvg}
+                alt="Riyal"
+                fill
+                className="object-contain"
+                quality={100}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="flex justify-between items-center">
           <div className="flex justify-between items-center gap-1">
             <FaUser className="text-(--primary) text-xs" />
-            <span className="text-(--primary) text-xs">12 Geust</span>
+            <span className="text-(--primary) text-xs">
+              {data?.guest_capacity} Geust
+            </span>
           </div>
           <div className="flex justify-between items-center gap-1">
             <FaLocationDot className="text-(--primary) text-xs" />
-            <span className="text-(--primary) text-xs">Riyadh</span>
+            <span className="text-(--primary) text-xs">{data?.location}</span>
           </div>
           <div className="flex justify-between items-center gap-1">
-            <FaClock className="text-(--primary) text-xs" />
-            <span className="text-(--primary) text-xs">6h</span>
+            <FaRegClock className="text-(--primary) text-xs" />
+            <span className="text-(--primary) text-xs">{data?.duration}h</span>
           </div>
           <div className="flex justify-between items-center gap-1">
             <FaStar className="text-amber-200 text-xs" />
-            <span className="text-(--primary) text-xs">(4.5)</span>
+            <span className="text-(--primary) text-xs">
+              ({data?.average_rating})
+            </span>
           </div>
         </div>
       </div>

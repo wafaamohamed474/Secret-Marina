@@ -2,7 +2,7 @@
 import Image, { StaticImageData } from "next/image";
 
 type TripCardProps = {
-  img: StaticImageData;
+  img: string | StaticImageData;
   title: string;
 };
 

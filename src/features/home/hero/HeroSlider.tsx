@@ -1,30 +1,31 @@
 import * as React from "react";
 
- 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import HeroHome from "./Hero";
+import { banners } from "@/types/types";
 
-export function HeroSlider() {
+interface HeroSliderProps {
+  banners?: banners[];
+}
+
+export const HeroSlider: React.FC<HeroSliderProps> = ({ banners }) => {
   return (
     <div className="container-custom ">
       <Carousel className="w-full">
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {banners?.map((ban, index) => (
             <CarouselItem key={index}>
               <div className="p-1">
-                <HeroHome />
+                <HeroHome img={ban.image} />
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-         
       </Carousel>
     </div>
   );
-}
+};

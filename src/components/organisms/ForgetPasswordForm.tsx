@@ -9,6 +9,7 @@ import {
   forgetPasswordSchema,
   ForgetPasswordSchema,
 } from "@/lib/validations/forgetPasswordSchema";
+import FormHeader from "../molecules/FormHeader";
 
 export default function ForgetPasswordForm() {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,10 @@ export default function ForgetPasswordForm() {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 ">
+      <FormHeader
+        label="Forget Password"
+        description="Enter your phone number and we’ll send you a code to reset your password."
+      />
       <ForgetPasswordFields
         register={form.register}
         errors={form.formState.errors}

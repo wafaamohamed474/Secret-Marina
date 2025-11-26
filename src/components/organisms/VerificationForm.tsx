@@ -85,7 +85,7 @@ export default function VerificationForm() {
       {errors.code && <p className="text-red-500">{errors.code.message}</p>}
       <FormBtn label="Verify" />
       <div className="w-full flex justify-center items-center">
-       <FormLink label="Didn’t receive the code?" link="Resend" path="/"/>
+       <FormLink label="Didn’t receive the code?" link="Resend"/>
        </div>
     </form>
   );

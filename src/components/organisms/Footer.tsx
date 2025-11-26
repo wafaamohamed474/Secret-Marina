@@ -9,8 +9,11 @@ export default function Footer() {
     <footer className="w-full  py-20 bg-(--primary) flex justify-center items-center ">
       <div className="container-custom ">
         <div className="grid md:grid-cols-4  lg:grid-cols-3">
+
+
+
           <div className="flex flex-col md:col-span-2  lg:col-span-1 justify-center">
-            <div className="flex lg:justify-start">
+            <div className="flex lg:justify-start lg:-ml-16">
               <Image
                 src={FooterLogoImg}
                 alt="Logo"
@@ -46,6 +49,7 @@ export default function Footer() {
           <div className="flex  justify-start items-center md:col-span-2  lg:col-span-2">
             <FooterLinks />
           </div>
+          
         </div>
 
         <div className="text-center pt-10">

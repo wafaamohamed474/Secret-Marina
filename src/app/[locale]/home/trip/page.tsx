@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Categories() {
+export default function Trip() {
   return (
     <div>
-      Categories
+      Trip
     </div>
   )
 }

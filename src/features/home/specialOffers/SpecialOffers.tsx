@@ -1,34 +1,49 @@
 "use client";
 import UnderlineTitle from "@/components/atoms/UnderlineTitle";
-
 import ActivityImg from "@/assets/images/ship.jpg";
-import ActivityCard from "../activities/ActivityCard";
-import MainText from "@/components/atoms/MainText";
-
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import SpecialOffersCard from "./SpecialOffersCard";
+import { TopDiscountService } from "@/types/types";
+import SectionLink from "@/components/atoms/SectionLink";
+import Link from "next/link";
 
-export default function SpecialOffers() {
+interface SpecialOffersProps {
+  offers?: TopDiscountService[];
+}
+
+const SpecialOffers: React.FC<SpecialOffersProps> = ({ offers }) => {
   return (
     <section className="w-full py-20 bg-(--background)">
       <div className="container-custom text-center md:text-left">
         <UnderlineTitle textColor="text-(--offer)" bgColor="bg-(--offer)">
           Special Offers
         </UnderlineTitle>
-        
-         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full mx-auto py-12">
-          <ActivityCard title="Jeddah Islands" img={ActivityImg} />
-          <ActivityCard title="Jeddah Islands" img={ActivityImg} />
-          <ActivityCard title="Jeddah Islands" img={ActivityImg} />
-          <ActivityCard title="Jeddah Islands" img={ActivityImg} />
-          
-           
-        </div>
+
+        <Carousel className="w-full py-12">
+          <CarouselContent>
+            {offers?.map((offer, index) => (
+              <CarouselItem
+                key={offer.id}
+                className="md:basis-1/1 lg:basis-1/2"
+              >
+                <div className="p-1">
+                  <Link href={`/home/trip/${offer?.id}`}>
+                   <SpecialOffersCard data={offer} />
+                  </Link>
+                 
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+
+        <SectionLink />
       </div>
     </section>
   );
-}
+};
+export default SpecialOffers;

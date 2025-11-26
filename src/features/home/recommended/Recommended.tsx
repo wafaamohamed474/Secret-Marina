@@ -10,8 +10,15 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { recommended_service } from "@/types/types";
+import RecommendedCard from "./RecommendedCard";
+import SectionLink from "@/components/atoms/SectionLink";
 
-export default function Recommended() {
+interface RecommendedProps {
+  services?: recommended_service[];
+}
+
+const Recommended: React.FC<RecommendedProps> = ({ services }) => {
   return (
     <section className="w-full py-20 bg-(--background)">
       <div className="container-custom text-center md:text-left">
@@ -19,16 +26,21 @@ export default function Recommended() {
           Recommended
         </UnderlineTitle>
         <MainText>Top picks chosen just for you.</MainText>
-         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full mx-auto py-12">
-          <ActivityCard title="Jeddah Islands" img={ActivityImg} />
-          <ActivityCard title="Jeddah Islands" img={ActivityImg} />
-          <ActivityCard title="Jeddah Islands" img={ActivityImg} />
-          <ActivityCard title="Jeddah Islands" img={ActivityImg} />
-          
-           
-        </div>
+
+        <Carousel className="w-full py-12">
+          <CarouselContent>
+            {services?.map((serv, index) => (
+              <CarouselItem key={serv.id} className="md:basis-1/2 lg:basis-1/4">
+                <div className="p-1">
+                  <RecommendedCard data={serv} />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+        <SectionLink/>
       </div>
     </section>
   );
-}
+};
+export default Recommended;

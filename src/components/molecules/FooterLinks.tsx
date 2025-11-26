@@ -1,21 +1,22 @@
+"use client"
 import { FaFacebook, FaInstagram, FaSnapchat, FaTiktok } from "react-icons/fa";
 import LinkAtom from "../atoms/LinkAtom";
 import { FaXTwitter } from "react-icons/fa6";
+import { usePathname } from "next/navigation";
 
-// Data
 export const quickLinks = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Categories", href: "/categories" },
-  { label: "Destinations", href: "/destinations" },
-  { label: "Booking", href: "/booking" },
+  { label: "Home", href: "home" },
+  { label: "About Us", href: "about" },
+  { label: "Categories", href: "categories" },
+  { label: "Destinations", href: "destinations" },
+  { label: "Booking", href: "booking" },
 ];
 
 export const supportLinks = [
-  { label: "Contact Us", href: "/contact" },
-  { label: "Help & Support", href: "/help" },
-  { label: "Terms & Conditions", href: "/terms" },
-  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Contact Us", href: "contact" },
+  { label: "Help & Support", href: "help" },
+  { label: "Terms & Conditions", href: "terms" },
+  { label: "Privacy Policy", href: "privacy" },
 ];
 
 export const iconLinks = [
@@ -28,13 +29,15 @@ export const iconLinks = [
 
 // Component
 export default function FooterLinks() {
+  const pathname = usePathname();
+  const currentLocale = pathname.split("/")[1] || "en";
   return (
     <div className="md:flex md:flex-wrap  lg:flex justify-start w-full gap-20 ">
       {/* Quick Links */}
       <div className="flex  flex-col   gap-4 mb-8 lg:mb-0">
         <h4 className="font-bold text-base text-(--background)">Quick Links</h4>
         {quickLinks.map((link) => (
-          <LinkAtom key={link.href} label={link.label} href={link.href} />
+          <LinkAtom key={link.href} label={link.label} href={`/${currentLocale}/${link.href}`} />
         ))}
       </div>
 
@@ -42,7 +45,7 @@ export default function FooterLinks() {
       <div className="flex flex-col gap-4  mb-8 lg:mb-0">
         <h4 className="font-bold text-base text-(--background)">Support</h4>
         {supportLinks.map((link) => (
-          <LinkAtom key={link.href} label={link.label} href={link.href} />
+          <LinkAtom key={link.href} label={link.label} href={`/${currentLocale}/${link.href}`} />
         ))}
       </div>
 

@@ -7,6 +7,7 @@ import FormBtn from "../atoms/FormBtn";
 import ForgetPasswordFields from "../molecules/ForgetPasswordFields";
 import { setNewPasswordSchema, SetNewPasswordSchema } from "@/lib/validations/setNewPasswordSchema";
 import SetNewPasswordFields from "../molecules/SetNewPasswordFields";
+import FormHeader from "../molecules/FormHeader";
 
 
 
@@ -29,6 +30,7 @@ export default function SetNewPasswordForm() {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 ">
+      <FormHeader label="Set New Password" />
       <SetNewPasswordFields register={form.register} errors={form.formState.errors} />
       <FormBtn label="Reset Password" loading={loading} />
     </form>

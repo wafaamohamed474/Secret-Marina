@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
- 
+
 @tailwind utilities;
 
 *,
@@ -10,7 +10,7 @@
   padding: 0; */
   box-sizing: border-box;
 }
- 
+
 :root {
   /* -------- Radius -------- */
   --radius: 0.625rem;
@@ -18,14 +18,19 @@
   /* -------- Backgrounds -------- */
   --background: #ffffff;
   --input-secondary-bg: #008aef1a;
-  --card-bg: #008AEF1A;
+  --card-bg: #008aef1a;
   --paragraph-bg: #f5f5f5;
 
   /* -------- Primary Colors -------- */
   --primary: #008aef;
-  --primary-foreground: #e0f7fa; 
-  --gradient-title: linear-gradient(-90deg, #00e5c9 0%, #00e5c9 75%, #008aef 100%);
-  --gradient-btn: linear-gradient(90deg,  #00e5c9 10%, #008aef 90%);
+  --primary-foreground: #e0f7fa;
+  --gradient-title: linear-gradient(
+    -90deg,
+    #00e5c9 0%,
+    #00e5c9 75%,
+    #008aef 100%
+  );
+  --gradient-btn: linear-gradient(90deg, #00e5c9 10%, #008aef 90%);
 
   /* -------- Text Colors -------- */
   --text-black: #000000;
@@ -34,7 +39,7 @@
   --text-secondary: #a6a6a6;
   --input-placeholder: #c4c4c4;
   --form-link: #b6b6b6;
-  --hover-link:#c4c4c4;
+  --hover-link: #c4c4c4;
 
   /* -------- Borders -------- */
   --input-border: #c4c4c4;
@@ -43,6 +48,7 @@
   /* -------- Accent / Special -------- */
   --price: #00e5c9;
   --offer: #ee3322;
+
   --paragraph-text: #b6b6b6;
   --notifications: #00002b;
   --active-link: #00e5c9;
@@ -52,7 +58,7 @@
 }
 .title-gradient {
   background: var(--gradient-title);
-  -webkit-background-clip: text;     /* Safari / old WebKit */
+  -webkit-background-clip: text; /* Safari / old WebKit */
   background-clip: text;
   -webkit-text-fill-color: transparent; /* Safari needs this */
   color: transparent;
@@ -61,7 +67,7 @@
 .btn-gradient {
   background: var(--gradient-btn);
   background-repeat: no-repeat;
-  background-size: cover;   /* or: 200% 100% if you want animation */
+  background-size: cover; /* or: 200% 100% if you want animation */
   color: #ffffff;
 }
 
@@ -87,6 +93,6 @@
     width: 100%;
   }
   .container-custom {
-   @apply container mx-auto px-4 sm:px-6 lg:px-8;
-}
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
 }
