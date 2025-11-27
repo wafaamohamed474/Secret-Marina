@@ -13,7 +13,7 @@ export default function LandingTemplate() {
     const { data, isLoading, error } = useGetAllHomeDataQuery({ lang: currentLocale });
   
      
-    console.log("data : ", data?.data);
+   
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Error loading home data</p>;
   return (
