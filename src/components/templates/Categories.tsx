@@ -10,7 +10,7 @@ export default function CategoriesTemplate() {
     const currentLocale = pathname.split("/")[1] || "en";
   const { data, isLoading, error } = useGetAllHomeDataQuery({ lang: currentLocale });
 
-  console.log("data : ", data?.data);
+ 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading Categories data</p>;
 

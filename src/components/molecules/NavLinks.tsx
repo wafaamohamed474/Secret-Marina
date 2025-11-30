@@ -1,19 +1,27 @@
 "use client";
+
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, useSelectedLayoutSegments } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 import { Button } from "../ui/button";
 import BellWithBadge from "../atoms/BellWithBadge";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+
 export default function NavLinks({
   onLinkClick,
 }: {
   onLinkClick?: () => void;
 }) {
-  const pathname = usePathname();
-  const currentLocale = pathname.split("/")[1] || "en";
+  // Get dynamic route params (locale) from Next.js
+  const params = useParams();
+  const segments = useSelectedLayoutSegments(); // page segments (e.g., ["home"])
+  const locale = params?.locale || "en"; // default locale
+  const currentPage = segments[0] || ""; // first page segment
 
- const links = [
-    { href: "home", label: "Home" },
+  // Links
+  const publicLinks = [
+    { href: "", label: "Home" },
     { href: "about", label: "About Us" },
     { href: "discover", label: "Discover" },
     { href: "categories", label: "Categories" },
@@ -27,39 +35,46 @@ export default function NavLinks({
     { href: "settings", label: "Settings" },
   ];
 
-  const isAuth = true;
-  const showAuthLinks = isAuth ? authLinks : links;
+  // Auth state from cookie
+  // const token = Cookies.get("token");
+  // const isAuth = Boolean(token);
+  const [isAuth, setIsAuth] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    setIsAuth(!!token);
+  }, []);
+
+  const linksToShow = isAuth ? authLinks : publicLinks;
 
   return (
     <nav className="flex flex-col lg:flex-row justify-between lg:items-center gap-6">
-      {showAuthLinks.map((link) => (
-       <Link
-          key={link.href}
-          href={`/${currentLocale}/${link.href}`}
-          className={`font-medium text-lg ${
-            pathname === `/${currentLocale}/${link.href}`
-              ? "text-(--active-link)"
-              : "text-(--nav-links)"
-          }`}
-          onClick={onLinkClick}
-        >
-          {link.label}
-        </Link>
-      ))}
+      {linksToShow.map((link) => {
+        const fullHref = `/${locale}/${link.href}`;
 
-      {isAuth ? (
-        <div className="flex gap-3">
-          <BellWithBadge count={7} />
+        const isActive =
+          currentPage === link.href || (link.href === "" && currentPage === "");
 
-          <Button className="bg-(--primary-foreground) text-(--primary)">
-            <FaSearch />
-          </Button>
-        </div>
-      ) : (
+        return (
+          <Link
+            key={link.href}
+            href={fullHref}
+            className={`font-medium text-lg ${
+              isActive ? "text-(--active-link)" : "text-(--nav-links)"
+            }`}
+            onClick={onLinkClick}
+          >
+            {link.label}
+          </Link>
+        );
+      })}
+
+      <div className="flex gap-3">
+        {isAuth && <BellWithBadge count={7} />}
         <Button className="bg-(--primary-foreground) text-(--primary)">
           <FaSearch />
         </Button>
-      )}
+      </div>
     </nav>
   );
 }

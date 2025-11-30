@@ -10,12 +10,15 @@ import SpecialOffersCard from "./SpecialOffersCard";
 import { TopDiscountService } from "@/types/types";
 import SectionLink from "@/components/atoms/SectionLink";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface SpecialOffersProps {
   offers?: TopDiscountService[];
 }
 
 const SpecialOffers: React.FC<SpecialOffersProps> = ({ offers }) => {
+  const pathname = usePathname();
+  const currentLocale = pathname.split("/")[1] || "en";
   return (
     <section className="w-full py-20 bg-(--background)">
       <div className="container-custom text-center md:text-left">
@@ -31,10 +34,9 @@ const SpecialOffers: React.FC<SpecialOffersProps> = ({ offers }) => {
                 className="md:basis-1/1 lg:basis-1/2"
               >
                 <div className="p-1">
-                  <Link href={`/home/trip/${offer?.id}`}>
-                   <SpecialOffersCard data={offer} />
+                  <Link href={`/${currentLocale}/home/trip/${offer?.id}`}>
+                    <SpecialOffersCard data={offer} />
                   </Link>
-                 
                 </div>
               </CarouselItem>
             ))}

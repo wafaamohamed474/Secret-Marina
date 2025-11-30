@@ -1,40 +1,88 @@
-import { HomeDataResponse } from "@/types/types";
+import { LoginSchema } from "@/lib/validations/loginSchema";
+import { SignUpSchema } from "@/lib/validations/signUpSchema";
+import { VerificationSchema } from "@/lib/validations/verificationSchema";
+import {
+  HomeDataResponse,
+  LoginResponse,
+  SignUpResponse,
+  TripDetails,
+  VerifyOtpResponse,
+} from "@/types/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "js-cookie";
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
-  endpoints: (buider) => ({
-    Login: buider.mutation({
-      query: (body) => ({
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+    
+    prepareHeaders: (headers) => {
+      const token = Cookies.get("token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    Login: builder.mutation<LoginResponse, LoginSchema & { lang?: string }>({
+      query: ({ lang, ...body }) => ({
         url: "/login",
         method: "POST",
-        body,
+        body: { ...body, type: "user" },
+        params: lang ? { lang } : undefined, // optional lang in query
       }),
     }),
-    SignUp: buider.mutation({
-      query: (body) => ({
+
+    SignUp: builder.mutation<SignUpResponse, SignUpSchema & { lang?: string }>({
+      query: ({ lang, ...body }) => ({
         url: "/register",
         method: "POST",
-        body,
+        body: { ...body, type: "user" },
+        params: lang ? { lang } : undefined,
       }),
     }),
-    VerifyOtp: buider.mutation({
-      query: (phone) => ({
+
+    VerifyOtp: builder.mutation<
+      VerifyOtpResponse,
+      VerificationSchema & { lang?: string }
+    >({
+      query: ({ lang, ...payload }) => ({
         url: "/verify-code",
         method: "POST",
-        body: { phone },
+        body: payload,
+        params: lang ? { lang } : undefined,
       }),
     }),
-    GetAllHomeData: buider.query<HomeDataResponse, { lang?: string }>({
+
+    ResendOtp: builder.mutation<
+      VerifyOtpResponse,
+      { phone: string; lang?: string }
+    >({
+      query: ({ lang, ...body }) => ({
+        url: "/Resend-Otp",
+        method: "POST",
+        body,
+        params: lang ? { lang } : undefined,
+      }),
+    }),
+
+    GetAllHomeData: builder.query<HomeDataResponse, { lang?: string }>({
       query: ({ lang }) => ({
         url: `/HomeData?lang=${lang}`,
         method: "GET",
       }),
     }),
 
-    GetFavorites: buider.query<any, { lang?: string }>({
+    GetFavorites: builder.query<any, { lang?: string }>({
       query: ({ lang }) => ({
         url: `/favorites?lang=${lang}`,
+        method: "GET",
+      }),
+    }),
+
+    GetTripById: builder.query<TripDetails, { id: string; lang?: string }>({
+      query: ({ id, lang }) => ({
+        url: `/services/${id}?lang=${lang}`,
         method: "GET",
       }),
     }),
@@ -45,6 +93,8 @@ export const {
   useLoginMutation,
   useSignUpMutation,
   useVerifyOtpMutation,
+  useResendOtpMutation,
   useGetAllHomeDataQuery,
   useGetFavoritesQuery,
+  useGetTripByIdQuery,
 } = authApi;

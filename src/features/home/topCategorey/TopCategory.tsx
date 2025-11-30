@@ -1,14 +1,18 @@
+"use client"
 import UnderlineTitle from "@/components/atoms/UnderlineTitle";
 import CategoryCard from "./CategoreyCard";
 import { categories } from "@/types/types";
 import React from "react";
 import SectionLink from "@/components/atoms/SectionLink";
+import { usePathname } from "next/navigation";
 
 interface TopCategoryProps {
   categories?: categories[];
 }
 
 const TopCategory: React.FC<TopCategoryProps> = ({ categories }) => {
+  const pathname = usePathname();
+    const currentLocale = pathname.split("/")[1] || "en";
   return (
     <section className="py-20 border border-y  border-(--primary)">
       <div className="container-custom">
@@ -20,7 +24,7 @@ const TopCategory: React.FC<TopCategoryProps> = ({ categories }) => {
             <CategoryCard key={cat.id} img={cat.image} title={cat.title} />
           ))}
         </div>
-        <SectionLink/>
+        <SectionLink path={`/${currentLocale}/categories`}/>
       </div>
     </section>
   );

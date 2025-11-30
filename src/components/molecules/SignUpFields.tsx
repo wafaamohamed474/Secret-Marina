@@ -53,14 +53,14 @@ export default function SignUpFields({ register, errors }: any) {
       <div className="space-y-2">
         <AuthInput
           label="Phone Number"
-          id="phoneNumber"
+          id="phone"
           type="tel"
           placeholder="Enter your phone number"
           iconLeft={<FaMobile />}
-          {...register("phoneNumber")}
+          {...register("phone")}
         />
-        {errors.phoneNumber && (
-          <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>
+        {errors.phone && (
+          <p className="text-red-500 text-sm">{errors.phone.message}</p>
         )}
       </div>
       {/* PASSWORD */}

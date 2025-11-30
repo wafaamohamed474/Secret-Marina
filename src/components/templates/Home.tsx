@@ -1,6 +1,5 @@
 "use client"
 import Activities from '@/features/home/activities/Activites'
-import HeroHome from '@/features/home/hero/Hero'
 import { HeroSlider } from '@/features/home/hero/HeroSlider'
 import Recommended from '@/features/home/recommended/Recommended'
 import SpecialOffers from '@/features/home/specialOffers/SpecialOffers'
@@ -17,7 +16,7 @@ export default function HomeTemplate() {
   const { data, isLoading, error } = useGetAllHomeDataQuery({ lang: currentLocale });
 
    
-  console.log("data : ", data?.data);
+  
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading home data</p>;
   return (

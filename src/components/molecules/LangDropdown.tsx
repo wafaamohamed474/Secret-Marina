@@ -5,6 +5,7 @@ import { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import USFlag from "@/assets/images/US_flag.svg";
 import ARFlag from "@/assets/images/flag.png";
+
 import { usePathname ,  useRouter } from "next/navigation";
  
 
@@ -24,11 +25,11 @@ export default function LangDropdown() {
   };
 
   return (
-    <div className="relative inline-block text-left items-center pt-2   px-2">
+    <div className="relative inline-block text-left items-center pt-2 px-2   w-fit">
       {/* Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2"
+        className="flex items-center gap-2  "
       >
         <Image
           src={currentLocale === "en" ? USFlag : ARFlag}

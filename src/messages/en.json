@@ -1,5 +1,31 @@
 {
   "HomePage": {
     "title": "Hello world!"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "description": "Welcome back! Access your account to start your journey.",
+      "phoneRequired": "Phone is required",
+      "passwordRequired": "Password is required",
+      "invalidPhone": "Phone must be valid Egyptian (+20) or Saudi (+966) number",
+      "loginFailed": "Login failed"
+    },
+    "signup": {
+      "title": "Sign Up",
+      "nameRequired": "Name is required",
+      "emailInvalid": "Invalid email",
+      "phoneInvalid": "Phone must be valid Egyptian (+20) or Saudi (+966) number",
+      "passwordMin": "Password must be at least 8 characters",
+      "confirmPasswordRequired": "Confirm password is required",
+      "passwordMismatch": "Passwords do not match"
+    },
+    "verification": {
+      "title": "Verification",
+      "description": "A verification code has been sent to you. Enter it to continue.",
+      "otpRequired": "Verification code must be 4 digits",
+      "otpInvalid": "Invalid OTP",
+      "resendSuccess": "OTP resent successfully"
+    }
   }
 }

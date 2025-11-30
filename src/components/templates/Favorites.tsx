@@ -11,7 +11,7 @@ export default function FavoritesTemplate() {
     lang: currentLocale,
   });
 
-  console.log("data : ", data?.data);
+ 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading favorites data</p>;
   const isEmpty = data?.data?.length == 0 ? true : false;

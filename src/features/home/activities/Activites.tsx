@@ -1,20 +1,19 @@
 "use client";
-import UnderlineTitle from "@/components/atoms/UnderlineTitle";
-
-import ActivityImg from "@/assets/images/ship.jpg";
-
 import ActivityCard from "./ActivityCard";
 import MainTitle from "@/components/atoms/MainTitle";
 import MainText from "@/components/atoms/MainText";
 import { ActivityYouDontMiss } from "@/types/types";
 import React from "react";
 import SectionLink from "@/components/atoms/SectionLink";
+import { usePathname } from "next/navigation";
 
 interface ActivitiesProps {
   activities?: ActivityYouDontMiss[];
 }
 
 const Activities: React.FC<ActivitiesProps> = ({ activities }) => {
+   const pathname = usePathname();
+      const currentLocale = pathname.split("/")[1] || "en";
   return (
     <section className="w-full py-20  bg-(--primary-foreground)">
       <div className="container-custom text-center">
@@ -23,11 +22,11 @@ const Activities: React.FC<ActivitiesProps> = ({ activities }) => {
           Don’t miss out on the top activities that define Secret Marina
         </MainText>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full mx-auto py-12">
-          {activities?.map((activity) => (
+          {activities?.slice(0, 4).map((activity) => (
             <ActivityCard data={activity} key={activity.id} />
           ))}
         </div>
-        <SectionLink/>
+        <SectionLink path={`/${currentLocale}/home/activites`}/>
       </div>
     </section>
   );

@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import AuthDialog from "@/features/auth/AuthDialog";
+import { cookies } from "next/headers";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 type RootLayoutProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   params: Promise<{ locale: string }>;
 };
 
@@ -43,6 +44,7 @@ export default async function RootLayout({
   } catch (err) {
     notFound();
   }
+
   return (
     <html lang={locale}>
       <body className={`${poppins.variable} ${oleo.variable}`}>

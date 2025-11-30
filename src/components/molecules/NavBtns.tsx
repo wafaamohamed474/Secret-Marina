@@ -1,22 +1,34 @@
-import React from "react";
+"use client"
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { openDialog } from "@/store/services/authDialogSlice";
 import LangDropdown from "./LangDropdown";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 
 export default function NavBtns({ onLinkClick }: { onLinkClick?: () => void }) {
   const dispatch = useDispatch();
   const handleLogin = () => {
-    dispatch(openDialog("login"));
-    onLinkClick?.(); // close sheet if provided
-  };
-
-  const handleRegister = () => {
-    dispatch(openDialog("register"));
+    dispatch(openDialog({ screen: "login", phone: "" }));
     onLinkClick?.();
   };
 
-  const isAuth = true;
+  const handleRegister = () => {
+    dispatch(openDialog({ screen: "register", phone: "" }));
+    onLinkClick?.();
+  };
+ 
+  const [isAuth, setIsAuth] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    setIsAuth(!!token);
+  }, []);
+
+  // Wait until we know auth state
+  if (isAuth === null) return null;
+  // const token = Cookies.get("token");
+  // const isAuth = Boolean(token);
   return (
     <>
       {isAuth ? (

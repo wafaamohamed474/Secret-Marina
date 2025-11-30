@@ -1,18 +1,20 @@
+"use client"
 import MainText from "@/components/atoms/MainText";
 import MainTitle from "@/components/atoms/MainTitle";
 import TripCard from "./TripCard";
-import img1 from "@/assets/images/img1.jpg";
-import img2 from "@/assets/images/img2.jpg";
-import img3 from "@/assets/images/img3.jpg";
 import { trip_types } from "@/types/types";
 import React from "react";
 import SectionLink from "@/components/atoms/SectionLink";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface TripsTypesProps {
   trips?: trip_types[];
 }
 
 const TripsTypes: React.FC<TripsTypesProps> = ({ trips }) => {
+  const pathname = usePathname();
+  const currentLocale = pathname.split("/")[1] || "en";
   return (
     <section className="py-20">
       <div className="container-custom text-center">
@@ -23,10 +25,12 @@ const TripsTypes: React.FC<TripsTypesProps> = ({ trips }) => {
         </MainText>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 lg:w-[90%] xl:w-[80%] gap-10 mx-auto py-12">
           {trips?.map((trip) => (
-            <TripCard key={trip.id} img={trip.image} title={trip.title} />
+            <Link href={`/${currentLocale}/home/trip-types/${trip.id}`} key={trip.id}>
+              <TripCard  img={trip.image} title={trip.title} />
+            </Link>
           ))}
         </div>
-        <SectionLink/>
+        {/* <SectionLink path={`/${currentLocale}/home/trip-types`}/> */}
       </div>
     </section>
   );

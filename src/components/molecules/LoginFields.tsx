@@ -4,34 +4,26 @@ import { FieldValues, UseFormRegister } from "react-hook-form";
 import AuthInput from "../atoms/AuthInput";
 import { FaEye, FaEyeSlash, FaLock, FaMobile } from "react-icons/fa";
 import FormLink from "../atoms/FormLink";
- 
+
 import { useState } from "react";
 
- 
-
 export default function LoginFields({ register, errors }: any) {
- 
-  const [showPassword, setShowPassword] = useState(false);
-  
   return (
     <div className="grid gap-6">
       {/* Phone number */}
       <div className="space-y-2">
         <AuthInput
           label="Phone Number"
-          id="phoneNumber"
+          id="phone"
           type="tel"
           placeholder="Enter your phone number"
           iconLeft={<FaMobile />}
-           
-          {...register("phoneNumber")}
+          {...register("phone")}
         />
-        {errors.phoneNumber && (
-          <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>
+        {errors.phone && (
+          <p className="text-red-500 text-sm">{errors.phone.message}</p>
         )}
       </div>
-
-     
     </div>
   );
 }
