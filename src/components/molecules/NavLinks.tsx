@@ -5,8 +5,11 @@ import { useParams, useSelectedLayoutSegments } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 import { Button } from "../ui/button";
 import BellWithBadge from "../atoms/BellWithBadge";
+import searchImg from "@/assets/images/search.svg"
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import {NotificationMenu} from "./NotificationMenu";
 
 export default function NavLinks({
   onLinkClick,
@@ -70,9 +73,9 @@ export default function NavLinks({
       })}
 
       <div className="flex gap-3">
-        {isAuth && <BellWithBadge count={7} />}
-        <Button className="bg-(--primary-foreground) text-(--primary)">
-          <FaSearch />
+        {isAuth &&   <NotificationMenu/>}
+        <Button className="bg-(--primary-foreground) text-(--primary) p-2">
+           <Image src={searchImg} alt="search img" className="w-6 h-6"/>
         </Button>
       </div>
     </nav>

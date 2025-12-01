@@ -1,46 +1,64 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+function decodeJwtPayload(token: string) {
+  try {
+    const base64Url = token.split(".")[1];
+    if (!base64Url) return null;
+
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+
+    return JSON.parse(jsonPayload);
+  } catch (err) {
+    console.error("Invalid JWT:", err);
+    return null;
+  }
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  let locale = pathname.split("/")[1];
+
+  if (!["ar", "en"].includes(locale)) {
+    locale = "ar";
+    const redirectUrl = new URL(`/${locale}${pathname}`, request.url);
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  const pathWithoutLocale = pathname.replace(/^\/(ar|en)(\/|$)/, "/");
   const token = request.cookies.get("token")?.value;
-  const url = request.nextUrl.clone();
 
+  const isProtected = pathWithoutLocale.startsWith("/home");
 
-  if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/api") ||
-    pathname.startsWith("/favicon") ||
-    pathname.endsWith(".png") ||
-    pathname.endsWith(".jpg") ||
-    pathname.endsWith(".svg") ||
-    pathname.endsWith(".css") ||
-    pathname.endsWith(".js")
-  ) {
-    return NextResponse.next();
-  }
-  // ⭐ 1. If user types "/", redirect to "/en"
-  if (pathname === "/") {
-    url.pathname = "/en";
-    return NextResponse.redirect(url);
+  if ((pathname === `/${locale}` || pathname === `/${locale}/`) && token) {
+    return NextResponse.redirect(new URL(`/${locale}/home`, request.url));
   }
 
-  // ⭐ 2. Allow "/en" and "/ar" as PUBLIC
-  if (pathname === "/en" || pathname === "/ar") {
-    return NextResponse.next();
+  if (isProtected) {
+    if (!token)
+      return NextResponse.redirect(new URL(`/${locale}`, request.url));
+
+    // Optional: JWT expiration check
+    const payload = decodeJwtPayload(token);
+    const now = Math.floor(Date.now() / 1000);
+    if (payload?.exp && payload.exp < now) {
+      const redirectRes = NextResponse.redirect(
+        new URL(`/${locale}`, request.url)
+      );
+      redirectRes.cookies.delete("token");
+      return redirectRes;
+    }
   }
 
-  // ⭐ 3. All other routes require token
-  if (!token) {
-    url.pathname = "/en"; // redirect to default locale
-    return NextResponse.redirect(url);
-  }
-
-  // ⭐ 4. If authenticated → allow access
   return NextResponse.next();
 }
 
-// Apply proxy to all routes
 export const config = {
-  matcher: ["/:path*"],
+  matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
 };

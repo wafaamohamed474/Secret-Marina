@@ -23,6 +23,7 @@ const Activities: React.FC<ActivitiesProps> = ({ activities }) => {
         </MainText>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full mx-auto py-12">
           {activities?.slice(0, 4).map((activity) => (
+            
             <ActivityCard data={activity} key={activity.id} />
           ))}
         </div>

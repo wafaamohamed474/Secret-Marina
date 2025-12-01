@@ -30,6 +30,7 @@ export const metadata: Metadata = {
 type RootLayoutProps = {
   children: ReactNode;
   params: Promise<{ locale: string }>;
+  // params: { locale: string };
 };
 
 export default async function RootLayout({
@@ -40,13 +41,13 @@ export default async function RootLayout({
 
   let messages;
   try {
-    messages = (await import(`@/messages/${locale}.json`)).default;
+    messages = (await import(`../../../messages/${locale}.json`)).default;
   } catch (err) {
     notFound();
   }
 
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={`${locale === "ar" ? "rtl" : "ltr"}`}>
       <body className={`${poppins.variable} ${oleo.variable}`}>
         <Providers>
           <NextIntlClientProvider locale={locale} messages={messages}>

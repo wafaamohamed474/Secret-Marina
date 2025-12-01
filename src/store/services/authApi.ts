@@ -6,6 +6,7 @@ import {
   LoginResponse,
   SignUpResponse,
   TripDetails,
+  TripTypesDetails,
   VerifyOtpResponse,
 } from "@/types/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -14,7 +15,7 @@ export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
-    
+
     prepareHeaders: (headers) => {
       const token = Cookies.get("token");
       if (token) {
@@ -29,7 +30,7 @@ export const authApi = createApi({
         url: "/login",
         method: "POST",
         body: { ...body, type: "user" },
-        params: lang ? { lang } : undefined, // optional lang in query
+        params: lang ? { lang } : undefined,  
       }),
     }),
 
@@ -86,6 +87,13 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
+    GetTripTypesById: builder.query<TripTypesDetails, { id: string; lang?: string }>({
+      query: ({ id, lang }) => ({
+        url: `/trips/${id}?lang=${lang}`,
+        method: "GET",
+      }),
+    }),
+
   }),
 });
 
@@ -97,4 +105,5 @@ export const {
   useGetAllHomeDataQuery,
   useGetFavoritesQuery,
   useGetTripByIdQuery,
+  useGetTripTypesByIdQuery
 } = authApi;

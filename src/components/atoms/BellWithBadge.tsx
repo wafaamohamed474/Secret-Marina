@@ -1,14 +1,21 @@
 "use client";
 
 import { FaRegBell } from "react-icons/fa";
+import notificatinImg from "@/assets/images/notification (2) 1.svg";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
-export default function BellWithBadge({ count }: { count: number }) {
+interface Props extends React.ComponentProps<"button"> {
+  count: number;
+}
+export default function BellWithBadge({ count, ...props }: Props) {
   return (
-    <Button className="relative flex items-center justify-center bg-(--primary-foreground) text-(--primary)">
-      {/* GIF Image */}
-      {/* <img src={src} alt="bell" className="w-full h-full" /> */}
-      <FaRegBell className="text-3xl font-bold" />
+    <Button
+      type="button"
+      {...props}
+      className="relative p-2 flex items-center justify-center bg-(--primary-foreground) text-(--primary)"
+    >
+      <Image src={notificatinImg} alt="notification bell" className="w-6 h-6" />
 
       {/* Badge */}
       {count > 0 && (

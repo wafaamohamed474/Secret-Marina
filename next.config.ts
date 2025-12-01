@@ -5,7 +5,14 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   productionBrowserSourceMaps: false, // prevents invalid source map errors
   images: {
-    domains: ["boat.computinggate.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "boat.computinggate.com",
+        port: "",          
+        pathname: "/**",   
+      },
+    ],
   },
 };
 

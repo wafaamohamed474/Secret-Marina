@@ -11,15 +11,16 @@ import { FaLocationDot } from "react-icons/fa6";
 
 import Riyalsvg from "@/assets/images/Riyal.svg";
 import RiyalRedsvg from "@/assets/images/RiyalRed.svg";
-import { recommended_service } from "@/types/types";
+ 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ServiceItem } from "@/types/types";
 
-type RecommendedCardProps = {
-  data: recommended_service;
+type TripTypeDetailsProps = {
+  data: ServiceItem;
 };
 
-export default function RecommendedCard({ data }: RecommendedCardProps) {
+export default function TripTypeDetailsCard({ data }: TripTypeDetailsProps) {
   const pathname = usePathname();
   const currentLocale = pathname.split("/")[1] || "en";
   return (
@@ -99,18 +100,14 @@ export default function RecommendedCard({ data }: RecommendedCardProps) {
             <div className="flex justify-between items-center gap-1">
               <FaLocationDot className="text-(--primary) text-xs" />
               <span className="text-(--primary) text-xs">
-                {typeof data?.destination === "object" &&
-                data?.destination !== null &&
-                "title" in data.destination
-                  ? (data.destination as { title: string }).title
+                {typeof data?.destination === "object" && data?.destination !== null
+                  ? data.destination.title
                   : data?.destination}
               </span>
             </div>
             <div className="flex justify-between items-center gap-1">
               <FaRegClock className="text-(--primary) text-xs" />
-              <span className="text-(--primary) text-xs">
-                {Number(data?.duration) / 60}h
-              </span>
+              <span className="text-(--primary) text-xs">{Number(data?.duration) / 60}h</span>
             </div>
             <div className="flex justify-between items-center gap-1">
               <FaStar className="text-amber-200 text-xs" />

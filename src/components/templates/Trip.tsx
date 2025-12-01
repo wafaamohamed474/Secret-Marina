@@ -18,7 +18,7 @@ export default function TripTemplate({ tripId }: { tripId?: string }) {
   if (isError) return <p>Error</p>;
   return (
     <div>
-      <TripDetailes />
+      <TripDetailes trip={data?.data}/>
     </div>
   );
 }

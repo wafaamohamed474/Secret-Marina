@@ -231,6 +231,55 @@ export interface TimeSlot {
   service_id: number;
   number_of_tickets: number | null;
 }
+
+export interface ServiceItem {
+  id: number;
+  title: string;
+  price: string;
+  price_before_discount: number;
+  price_after_discount: number;
+  discount_percentage: number;
+  average_rating: string;
+  my_rating?: number | null;
+  booking_stats?: BookingStats;
+  location: string;
+  longitude?: string;
+  latitude?: string;
+  guest_capacity?: number | null;
+  duration: string;
+  lounges?: number | null;
+  bedrooms?: number | null;
+  toilets?: number | null;
+  captain?: string | null;
+  details?: string | null;
+  description: string;
+  have_a_ticket: number | 0 | 1;
+  number_of_tickets?: number | null;
+  child_free: number | 0 | 1;
+  images: service_image[];
+  service_owner?: ServiceOwner;
+  category?: ActivityCategory | string | null;
+  trip?: ActivityTrip | trip_types;
+  destination?: Destination | string | null;
+  facilities?: Facility[];
+  time_slots?: TimeSlot[];
+  created_at?: string;
+  updated_at?: string;
+  is_favorited?: boolean;
+}
+export interface TripTypeCategory {
+  id: number;
+  title: string;
+  services: ServiceItem[];
+}
+export interface TripTypesDetails {
+  data: {
+    id: number;
+    title: string;
+    categories: TripTypeCategory[];
+    services_without_category: ServiceItem[];
+  };
+}
 export interface HomeDataResponse {
   data: {
     trip_types: trip_types[];

@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
  
 interface MainTitleProps {
-  children: string;
+  children: string | ReactNode;
 }
 
 export default function MainTitle({ children }: MainTitleProps) {

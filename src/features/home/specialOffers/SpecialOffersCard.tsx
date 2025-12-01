@@ -22,8 +22,9 @@ export default function SpecialOffersCard({ data }: SpecialOffersCardProps) {
       </div>
 
       <div className="flex flex-col items-end pt-5 pr-5">
+        
         <div className="flex items-center  gap-1 ">
-          <span className="text-base text-(--primary) font-semibold">{data?.price_before_discount}</span>
+          <span className="text-base text-(--primary) font-semibold">{data?.price_after_discount}</span>
           <div className="w-5 h-5 relative">
             <Image
               src={Riyalsvg}
@@ -37,7 +38,7 @@ export default function SpecialOffersCard({ data }: SpecialOffersCardProps) {
 
         <div className="flex items-center gap-1 pr-1.5">
           <span className="text-xs text-(--offer) font-semibold line-through">
-             {data?.price_after_discount}
+             {data?.price_before_discount}
           </span>
           <div className="w-4 h-4 relative">
             <Image
@@ -83,13 +84,13 @@ export default function SpecialOffersCard({ data }: SpecialOffersCardProps) {
             <div className="flex justify-between items-center gap-1 bg-(--card-bg) rounded-xl py-1 md:py-2 px-3">
               <FaLocationDot className="text-(--primary) text-[10px] md:text-xs" />
               <span className="text-(--primary) text-[10px] md:text-xs">
-                 {data?.location}
+                 {data?.destination?.title}
               </span>
             </div>
             <div className="flex justify-between items-center gap-1 bg-(--card-bg) rounded-xl py-1 md:py-2 px-3">
               <FaRegClock className="text-(--primary) text-[10px] md:text-xs" />
               <span className="text-(--primary) text-[10px] md:text-xs">
-                {data?.duration}h
+                {Number(data?.duration) / 60}h
               </span>
             </div>
           </div>

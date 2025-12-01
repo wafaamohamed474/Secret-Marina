@@ -1,6 +1,6 @@
  
 interface MainTextProps {
-  children: string;
+  children?: string;
 }
 
 export default function MainText({ children }: MainTextProps) {
