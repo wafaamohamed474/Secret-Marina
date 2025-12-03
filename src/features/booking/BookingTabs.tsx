@@ -2,32 +2,40 @@
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+
 interface TabItem {
   value: string;
   label: string;
   content?: React.ReactNode;
 }
 
-export default function CustomTabs({
-  tabs,
-  defaultValue,
-}: {
+interface BookingTabsProps {
   tabs: TabItem[];
-  defaultValue?: string;
-}) {
+  selectedValue: string;
+  onChange: (value: string) => void;
+}
+
+export default function BookingTabs({
+  tabs,
+  selectedValue,
+  onChange,
+}: BookingTabsProps) {
+  console.log("selected Val", selectedValue);
+
   return (
     <Tabs
-      defaultValue={defaultValue || tabs[0]?.value}
-      className="w-full py-5 gap-10 flex flex-col items-center"
+      value={selectedValue || tabs[0]?.value}
+      onValueChange={onChange}
+      className="w-full gap-10 flex flex-col items-center"
     >
       {/* Tabs Header */}
-      <TabsList className="flex gap-5 overflow-x-auto ">
+      <TabsList className="flex gap-2 md:gap-3 lg:gap-5 overflow-x-auto bg-(--card-bg) p-1 rounded-full h-12 w-full md:w-fit md:h-16 lg:h-20 border border-(--primary)">
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}
             value={tab.value}
             className={cn(
-              "flex-1 whitespace-nowrap px-4 py-2 rounded-md transition-colors",
+              "flex-1 whitespace-nowrap  p-2 md:px-6 lg:px-10  md:py-1 rounded-full transition-colors border border-(--primary) text-xs md:text-base font-bold",
               "bg-(--background) text-(--primary)",
               "data-[state=active]:bg-(--primary) data-[state=active]:text-white"
             )}

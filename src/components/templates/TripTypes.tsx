@@ -1,7 +1,5 @@
 import { useGetTripTypesByIdQuery } from "@/store/services/authApi";
 import { usePathname } from "next/navigation";
-import React from "react";
-import CustomTabs from "../molecules/CustomTabs";
 import TripTypeDetails from "@/features/trip-types/TripTypeDetails";
 
 export default function TripTypesTemplate({

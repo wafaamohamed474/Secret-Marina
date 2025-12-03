@@ -2,21 +2,18 @@
 
 import Link from "next/link";
 import { useParams, useSelectedLayoutSegments } from "next/navigation";
-import { FaSearch } from "react-icons/fa";
 import { Button } from "../ui/button";
-import BellWithBadge from "../atoms/BellWithBadge";
-import searchImg from "@/assets/images/search.svg"
-import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import searchImg from "@/assets/images/search.svg";
 import Image from "next/image";
-import {NotificationMenu} from "./NotificationMenu";
+import { NotificationMenu } from "./NotificationMenu";
 
 export default function NavLinks({
   onLinkClick,
+  isAuth,
 }: {
   onLinkClick?: () => void;
+  isAuth?: boolean;
 }) {
-  // Get dynamic route params (locale) from Next.js
   const params = useParams();
   const segments = useSelectedLayoutSegments(); // page segments (e.g., ["home"])
   const locale = params?.locale || "en"; // default locale
@@ -25,35 +22,27 @@ export default function NavLinks({
   // Links
   const publicLinks = [
     { href: "", label: "Home" },
-    { href: "about", label: "About Us" },
-    { href: "discover", label: "Discover" },
-    { href: "categories", label: "Categories" },
+    { href: "#about", label: "About Us" },
+    { href: "#discover", label: "Discover" },
+    { href: "#categories", label: "Categories" },
   ];
 
   const authLinks = [
     { href: "home", label: "Home" },
-    { href: "categories", label: "Categories" },
-    { href: "booking", label: "Booking" },
-    { href: "favorites", label: "Favorites" },
-    { href: "settings", label: "Settings" },
+    { href: "/home/categories", label: "Categories" },
+    { href: "/home/booking", label: "Booking" },
+    { href: "/home/favorites", label: "Favorites" },
+    { href: "/home/settings", label: "Settings" },
   ];
-
-  // Auth state from cookie
-  // const token = Cookies.get("token");
-  // const isAuth = Boolean(token);
-  const [isAuth, setIsAuth] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    setIsAuth(!!token);
-  }, []);
 
   const linksToShow = isAuth ? authLinks : publicLinks;
 
   return (
     <nav className="flex flex-col lg:flex-row justify-between lg:items-center gap-6">
       {linksToShow.map((link) => {
-        const fullHref = `/${locale}/${link.href}`;
+        const fullHref = link.href.startsWith("#")
+          ? `/${locale}${link.href}` // <-- correct: /ar#about
+          : `/${locale}/${link.href}`;
 
         const isActive =
           currentPage === link.href || (link.href === "" && currentPage === "");
@@ -73,9 +62,9 @@ export default function NavLinks({
       })}
 
       <div className="flex gap-3">
-        {isAuth &&   <NotificationMenu/>}
+        {isAuth && <NotificationMenu />}
         <Button className="bg-(--primary-foreground) text-(--primary) p-2">
-           <Image src={searchImg} alt="search img" className="w-6 h-6"/>
+          <Image src={searchImg} alt="search img" className="w-6 h-6" />
         </Button>
       </div>
     </nav>

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type AuthScreen = "login" | "register" | "forgot" | "verify" | "reset";
+export type AuthScreen = "login" | "register"  | "verify" ;
 
 interface AuthDialogState {
   open: boolean;

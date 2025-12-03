@@ -16,7 +16,7 @@ const PopularDestinations: React.FC<PopularDestinationsProps> = ({
   const pathname = usePathname();
   const currentLocale = pathname.split("/")[1] || "en";
   return (
-    <section className="w-full py-20  bg-(--primary)">
+    <section className="w-full py-20  bg-(--primary)" id="discover">
       <div className="container-custom">
         <UnderlineTitle>Discover Popular Destinations</UnderlineTitle>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-9 lg:w-[90%] xl:w-[80%] mx-auto py-12">

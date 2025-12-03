@@ -32,7 +32,7 @@ export function proxy(request: NextRequest) {
   }
 
   const pathWithoutLocale = pathname.replace(/^\/(ar|en)(\/|$)/, "/");
-  const token = request.cookies.get("token")?.value;
+  const token = request.cookies.get("auth_token")?.value;
 
   const isProtected = pathWithoutLocale.startsWith("/home");
 
@@ -51,7 +51,7 @@ export function proxy(request: NextRequest) {
       const redirectRes = NextResponse.redirect(
         new URL(`/${locale}`, request.url)
       );
-      redirectRes.cookies.delete("token");
+      redirectRes.cookies.delete("auth_token");
       return redirectRes;
     }
   }

@@ -12,8 +12,6 @@ export default function TripTemplate({ tripId }: { tripId?: string }) {
     id: tripId,
     lang: currentLocale,
   });
-  console.log("trip id :", tripId);
-  console.log("data from id :", data?.data);
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error</p>;
   return (

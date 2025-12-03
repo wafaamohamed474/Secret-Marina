@@ -6,6 +6,7 @@ import PopularDestinations from "@/features/landing/popular/PopularDestinations"
 import TripsTypes from "@/features/landing/trips-types/TripsTypes";
 import { usePathname } from "next/navigation";
 import { useGetAllHomeDataQuery } from "@/store/services/authApi";
+import TopCategory from "@/features/home/topCategorey/TopCategory";
 
 export default function LandingTemplate() {
   const pathname = usePathname()
@@ -22,6 +23,8 @@ export default function LandingTemplate() {
       <About />
        <PopularDestinations destinations={data?.data?.destinations} />
       <TripsTypes trips={data?.data?.trip_types} />
+      <TopCategory categories={data?.data?.categories} />
+
     </>
   );
 }

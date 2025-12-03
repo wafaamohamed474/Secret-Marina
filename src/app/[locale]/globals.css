@@ -88,7 +88,11 @@
     color: var(--text-title);
     line-height: 1.5;
   }
-
+  #about,
+  #discover,
+  #categories {
+    scroll-margin-top: 80px; /* or your navbar height */
+  }
   img {
     width: 100%;
   }

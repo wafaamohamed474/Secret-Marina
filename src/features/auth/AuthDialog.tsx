@@ -1,14 +1,10 @@
 "use client";
-import ForgetPasswordForm from "@/components/organisms/ForgetPasswordForm";
+
 import LoginForm from "@/components/organisms/LoginForm";
-import SetNewPasswordForm from "@/components/organisms/SetNewPasswordForm";
+
 import SignUpForm from "@/components/organisms/SignUpForm";
 import VerificationForm from "@/components/organisms/VerificationForm";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { closeDialog } from "@/store/services/authDialogSlice";
 import { RootState } from "@/store/store";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -28,12 +24,10 @@ export default function AuthDialog() {
         return <LoginForm />;
       case "register":
         return <SignUpForm />;
-      case "forgot":
-        return <ForgetPasswordForm />;
+
       case "verify":
         return <VerificationForm />;
-      case "reset":
-        return <SetNewPasswordForm />;
+
       default:
         return <LoginForm />;
     }

@@ -6,15 +6,15 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useState } from "react";
 import NavBtns from "../molecules/NavBtns";
 
-export default function MenuLinks() {
+export default function MenuLinks({isAuth}:{isAuth : boolean}) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       {/* Desktop Menu */}
       <div className="hidden lg:flex justify-between gap-x-10 xl:gap-x-50">
-        <NavLinks />
-        <NavBtns />
+        <NavLinks isAuth={isAuth}/>
+        <NavBtns isAuth={isAuth} />
       </div>
 
       {/* Mobile Menu */}
@@ -32,8 +32,8 @@ export default function MenuLinks() {
               <SheetTitle></SheetTitle>
             </VisuallyHidden>
 
-            <NavLinks onLinkClick={() => setOpen(false)} />
-            <NavBtns onLinkClick={() => setOpen(false)} />
+            <NavLinks isAuth={isAuth} onLinkClick={() => setOpen(false)} />
+            <NavBtns isAuth={isAuth} onLinkClick={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
       </div>

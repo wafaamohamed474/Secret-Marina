@@ -10,14 +10,15 @@ import {
   VerifyOtpResponse,
 } from "@/types/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import Cookies from "js-cookie";
+import { getToken } from "./checkAuth";
+
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
 
-    prepareHeaders: (headers) => {
-      const token = Cookies.get("token");
+    prepareHeaders: async (headers) => {
+      const token = await getToken();
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -30,7 +31,7 @@ export const authApi = createApi({
         url: "/login",
         method: "POST",
         body: { ...body, type: "user" },
-        params: lang ? { lang } : undefined,  
+        params: lang ? { lang } : undefined,
       }),
     }),
 
@@ -87,13 +88,55 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
-    GetTripTypesById: builder.query<TripTypesDetails, { id: string; lang?: string }>({
+    GetTripTypesById: builder.query<
+      TripTypesDetails,
+      { id: string; lang?: string }
+    >({
       query: ({ id, lang }) => ({
         url: `/trips/${id}?lang=${lang}`,
         method: "GET",
       }),
     }),
 
+    GetUserBooking: builder.query<any, { lang?: string; status?: string }>({
+      query: ({ lang, status }) => ({
+        url: `/user/bookings`,
+        method: "GET",
+        params: { lang, status },
+      }),
+    }),
+    CancelUserBooking: builder.mutation<any, { lang?: string; id: string }>({
+      query: ({ lang, id }) => ({
+        url: `/bookings/${id}/cancel`,
+        method: "PATCH",
+        params: { lang },
+      }),
+    }),
+    GetBookingById: builder.query<any, { id: string; lang?: string }>({
+      query: ({ id, lang }) => ({
+        url: `/bookings/${id}?lang=${lang}`,
+        method: "GET",
+      }),
+    }),
+    GetNotifications: builder.query<any, { lang?: string }>({
+      query: ({ lang }) => ({
+        url: `/notifications?lang=${lang}`,
+        method: "GET",
+      }),
+    }),
+
+    DeleteSingleNotification: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/notifications/${id}/delete`,
+        method: "DELETE",
+      }),
+    }),
+    ReadSingleNotification: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/notifications/${id}/read`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -105,5 +148,11 @@ export const {
   useGetAllHomeDataQuery,
   useGetFavoritesQuery,
   useGetTripByIdQuery,
-  useGetTripTypesByIdQuery
+  useGetTripTypesByIdQuery,
+  useGetUserBookingQuery,
+  useCancelUserBookingMutation,
+  useGetBookingByIdQuery,
+  useGetNotificationsQuery,
+  useDeleteSingleNotificationMutation,
+  useReadSingleNotificationMutation
 } = authApi;

@@ -14,7 +14,7 @@ const TopCategory: React.FC<TopCategoryProps> = ({ categories }) => {
   const pathname = usePathname();
     const currentLocale = pathname.split("/")[1] || "en";
   return (
-    <section className="py-20 border border-y  border-(--primary)">
+    <section className="py-20 border border-y  border-(--primary)" id="categories">
       <div className="container-custom">
         <UnderlineTitle bgColor="bg-(--primary)" textColor="text-(--primary)">
           Secret Marina Top Category
@@ -24,7 +24,7 @@ const TopCategory: React.FC<TopCategoryProps> = ({ categories }) => {
             <CategoryCard key={cat.id} img={cat.image} title={cat.title} />
           ))}
         </div>
-        <SectionLink path={`/${currentLocale}/categories`}/>
+        <SectionLink path={`/${currentLocale}/home/categories`}/>
       </div>
     </section>
   );

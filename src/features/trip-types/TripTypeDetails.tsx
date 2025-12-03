@@ -17,14 +17,15 @@ const TripTypeDetails: React.FC<TripTypesDetailsProps> = ({ tripTypes }) => {
   let currentLocale = pathname.split("/")[1] || "en";
   const categories = tripTypes.data.categories;
   const services_without_category = tripTypes.data.services_without_category;
-  console.log("services_without_category", services_without_category);
 
   interface TabItem {
     value: string;
     label: string;
     content: React.ReactNode;
   }
-  const tabs: TabItem[] = [];
+  const tabs: TabItem[] = [
+    
+  ];
 
   if (categories?.length) {
     categories.forEach((cat) => {

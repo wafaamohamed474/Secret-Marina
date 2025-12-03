@@ -19,6 +19,7 @@ import FormHeader from "../molecules/FormHeader";
 import FormBtn from "../atoms/FormBtn";
 import FormLink from "../atoms/FormLink";
 import { Input } from "../ui/input";
+import { saveTokenAction } from "@/store/services/saveTokenAction";
 
 export default function VerificationForm() {
   const dispatch = useDispatch();
@@ -77,14 +78,19 @@ export default function VerificationForm() {
   // Verification success
   useEffect(() => {
     if (verifyData) {
-      console.log("data after verfiy :" , verifyData)
-      Cookies.set("token", verifyData?.data?.token, {
-        expires: 7,  
-        sameSite: "Strict",
-        secure: process.env.NODE_ENV === "production",
-      });
-      dispatch(closeDialog());
-      router.push(`/${currentLocale}/home`);
+      (async () => {
+        try {
+          console.log("data after verify:", verifyData);
+
+          // Save token securely in server-side HTTP-only cookie
+          await saveTokenAction(verifyData?.data?.token);
+
+          dispatch(closeDialog());
+          router.push(`/${currentLocale}/home`);
+        } catch (err) {
+          console.error("Failed to save token:", err);
+        }
+      })();
     }
   }, [verifyData, dispatch, router, currentLocale]);
 
@@ -155,7 +161,9 @@ export default function VerificationForm() {
           {code.map((digit, idx) => (
             <Input
               key={idx}
-              ref={(el) => {inputsRef.current[idx] = el}}
+              ref={(el) => {
+                inputsRef.current[idx] = el;
+              }}
               type="text"
               inputMode="numeric"
               maxLength={1}

@@ -291,3 +291,24 @@ export interface HomeDataResponse {
     top_discount_services: TopDiscountService[];
   };
 }
+
+export interface BookingCardStatus {
+  adult_tickets: number;
+  child_tickets: number;
+  date: string;
+  discount_percent: string;
+  end_time: string;
+  id: number;
+  original_price: string;
+  payment_method: string;
+  start_time: string;
+  status: string;
+  total_price: string;
+  service: ServiceItem;
+  user: {
+    email: string;
+    id: number;
+    name: string;
+    phone: string;
+  };
+}

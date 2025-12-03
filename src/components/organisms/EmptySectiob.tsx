@@ -10,6 +10,7 @@ interface EmptySectionProps {
   buttonLabel?: string;
   buttonHref?: string;
   onButtonClick?: () => void;
+  className?:string
 }
 
 export default function EmptySection({
@@ -17,9 +18,10 @@ export default function EmptySection({
   buttonLabel,
   buttonHref,
   onButtonClick,
+  className
 }: EmptySectionProps) {
   return (
-    <section className="container-custom pb-20 pt-32 flex flex-col items-center text-center h-full justify-center">
+    <section className={`container-custom pb-20 pt-32 flex flex-col items-center text-center h-full justify-center ${className}`}>
       <div className="relative w-80 md:w-1/2 xl:w-1/3 h-80  ">
         <Image src={EmptyImg} alt="empty state" fill className="object-cober" />
       </div>

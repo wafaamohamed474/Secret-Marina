@@ -1,65 +1,66 @@
+"use client";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ServiceItem } from "@/types/types";
+import { usePathname } from "next/navigation";
+import { useGetBookingByIdQuery } from "@/store/services/authApi";
 import Image from "next/image";
-import Link from "next/link";
 import Riyalsvg from "@/assets/images/RiyalBlue.svg";
 import { GiCaptainHatProfile } from "react-icons/gi";
-import { IoBed, IoBedOutline, IoBedSharp } from "react-icons/io5";
 import { facilityIcons } from "@/lib/icons";
-import {
-  FaArrowLeft,
-  FaClock,
-  FaHeart,
-  FaRegClock,
-  FaRegHeart,
-  FaToilet,
-  FaUser,
-} from "react-icons/fa";
+import { FaRegClock, FaToilet, FaUser } from "react-icons/fa";
 import TripServiceBtn from "@/components/atoms/TripServiceBtn";
-import { FaLocationDot, FaToiletPortable } from "react-icons/fa6";
-import { BedDouble, BedIcon, Sofa, Toilet } from "lucide-react";
+import { FaLocationDot } from "react-icons/fa6";
+import { BedDouble, Sofa } from "lucide-react";
 import MainText from "@/components/atoms/MainText";
-import FormBtn from "@/components/atoms/FormBtn";
 import Rating from "@/components/molecules/Rating";
-import TripGallery from "@/components/molecules/TripGallery";
-import TripLocation from "@/components/molecules/TripLocation";
-import TripMap from "@/components/molecules/TripLocation";
+import TicketCard from "./TicketCard";
 import TripFacilities from "@/components/molecules/TripFacilities";
 
-interface SingleTripDetailsProps {
-  trip?: ServiceItem;
+interface BookingDetailsDialogProps {
+  bookingId: string;
 }
 
-const SingleTripDetailes = ({ trip }: SingleTripDetailsProps) => {
+export default function BookingDetailsDialog({
+  bookingId,
+}: BookingDetailsDialogProps) {
+  const pathname = usePathname();
+  const currentLocale = pathname.split("/")[1] || "en";
+
+  const { data, isLoading, error } = useGetBookingByIdQuery({
+    id: bookingId,
+    lang: currentLocale,
+  });
+
+  console.log("data from details", data?.data);
+  const trip = data?.data?.service || [];
   const isHaveCateigories = trip?.category == null ? false : true;
   return (
-    <section className="w-full">
-      <div className="container-custom pb-20 pt-32">
-        <div className="flex justify-between items-center mb-5">
-          <Link
-            className="bg-(--primary-foreground) text-(--primary) p-2 rounded-lg"
-            href={"/en/home"}
-          >
-            <FaArrowLeft />
-          </Link>
-          <button
-            className="
-                      top-2 right-2 
-                      bg-(--background) backdrop-blur 
-                      w-8 h-8 rounded-full flex items-center justify-center
-                      shadow-md
-                    "
-          >
-            {trip?.is_favorited ? (
-              <FaHeart className="text-(--offer) text-sm" />
-            ) : (
-              <FaRegHeart className="text-(--offer) text-sm" />
-            )}
-          </button>
-        </div>
-        <div className="grid lg:grid-cols-2 gap-10">
-          <TripGallery images={trip?.images || []} />
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className="bg-(--primary) text-white rounded-full cursor-pointer">
+          View Details
+        </Button>
+      </DialogTrigger>
 
+      <DialogContent
+        className="w-full max-w-md h-full sm:h-auto  md:max-w-2xl lg:max-w-3xl bg-(--background) md:px-10 z-1000   flex flex-col gap-6
+      justify-center  rounded-4xl border-0"
+      >
+        <DialogHeader>
+          <DialogTitle className="text-center text-base font-semibold text-(--primary)">
+            Booking Details
+          </DialogTitle>
+        </DialogHeader>
+        {isLoading && <p>Loading...</p>}
+        {error && <p className="text-red-500">Failed to load details</p>}
+
+        {data?.data && (
           <div>
             <div className="flex justify-between items-center">
               <p className="text-xl font-semibold   text-(--text-black)">
@@ -140,10 +141,10 @@ const SingleTripDetailes = ({ trip }: SingleTripDetailsProps) => {
                 <p className="text-base font-semibold   text-(--text-black) my-4">
                   Available Facilities
                 </p>
+
                 <TripFacilities trip={trip} />
               </div>
             )}
-
             <div>
               {trip?.description != null && (
                 <div>
@@ -156,42 +157,18 @@ const SingleTripDetailes = ({ trip }: SingleTripDetailsProps) => {
                 </div>
               )}
             </div>
-            {!isHaveCateigories && (
-              <div>
-                {trip?.details != null && (
-                  <div>
-                    <p className="text-base font-semibold   text-(--text-black) my-4">
-                      Details
-                    </p>
-                    <div className="bg-(--paragraph-bg) p-2 rounded-xl my-4 text-end">
-                      <MainText>{trip?.details ?? ""}</MainText>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-            <div>
-              {trip?.location != null && (
-                <div>
-                  <p className="text-base font-semibold   text-(--text-black) my-4">
-                    Location
-                  </p>
-                  <TripMap
-                    latitude={trip?.latitude ?? 0}
-                    longitude={trip?.longitude ?? 0}
-                    height="250px"
-                  />
-                </div>
-              )}
-            </div>
-
-            <div className="flex justify-end pt-5">
-              <FormBtn label="Book Now" className="w-fit" />
-            </div>
+            <TicketCard
+              title={trip?.title}
+              type={trip?.category?.title}
+              date={data?.data?.date}
+              time={`${data?.data?.start_time} ${data?.data?.end_time}`}
+              location={trip?.destination?.title}
+              total={data?.data?.total_price}
+              guests={trip?.guest_capacity}
+            />
           </div>
-        </div>
-      </div>
-    </section>
+        )}
+      </DialogContent>
+    </Dialog>
   );
-};
-export default SingleTripDetailes;
+}

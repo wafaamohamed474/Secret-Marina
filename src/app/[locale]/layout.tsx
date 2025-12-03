@@ -46,12 +46,16 @@ export default async function RootLayout({
     notFound();
   }
 
+  const cookieStore = await cookies();
+  const token = cookieStore.get("auth_token")?.value;
+  const isAuth = !!token;
+
   return (
     <html lang={locale} dir={`${locale === "ar" ? "rtl" : "ltr"}`}>
       <body className={`${poppins.variable} ${oleo.variable}`}>
         <Providers>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <Navbar />
+            <Navbar isAuth={isAuth} />
             {children}
             <AuthDialog />
             <Footer />

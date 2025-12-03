@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export default function About() {
   return (
-    <section className="container-custom w-full  py-20 grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
+    <section className="container-custom w-full  py-20 grid grid-cols-1 lg:grid-cols-2 items-center gap-8" id="about">
       {/* Left: Images (2 stacked rows) */}
       <div className="grid grid-cols-2 h-full gap-4">
         <div className="flex flex-col h-full gap-4">
