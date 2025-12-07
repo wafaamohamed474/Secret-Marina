@@ -20,7 +20,7 @@ export default function BookingTabs({
   selectedValue,
   onChange,
 }: BookingTabsProps) {
-  console.log("selected Val", selectedValue);
+   
 
   return (
     <Tabs

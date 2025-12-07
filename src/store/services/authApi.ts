@@ -88,6 +88,25 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
+    CheckAvailabilityTripById: builder.mutation<
+      any,
+      {
+        id: string;
+        date: string;
+        start_time: string;
+        end_time: string;
+      }
+    >({
+      query: ({ id, date, start_time, end_time }) => ({
+        url: `/services/${id}/check-availability`,
+        method: "POST",
+        body: {
+          date,
+          start_time,
+          end_time,
+        },
+      }),
+    }),
     GetTripTypesById: builder.query<
       TripTypesDetails,
       { id: string; lang?: string }
@@ -118,6 +137,15 @@ export const authApi = createApi({
         method: "GET",
       }),
     }),
+    GetBookSlotsById: builder.query<
+      any,
+      { id: string; lang?: string; date: string }
+    >({
+      query: ({ id, lang, date }) => ({
+        url: `/services/${id}/booked-slots?date=${date}&lang=${lang}`,
+        method: "GET",
+      }),
+    }),
     GetNotifications: builder.query<any, { lang?: string }>({
       query: ({ lang }) => ({
         url: `/notifications?lang=${lang}`,
@@ -137,6 +165,13 @@ export const authApi = createApi({
         method: "POST",
       }),
     }),
+    CreateBooking: builder.mutation<any, {body: any , lang?:string}>({
+      query: ({body ,lang}) => ({
+        url: `/CreateBooking?lang=${lang}`,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -152,7 +187,10 @@ export const {
   useGetUserBookingQuery,
   useCancelUserBookingMutation,
   useGetBookingByIdQuery,
+  useGetBookSlotsByIdQuery,
   useGetNotificationsQuery,
   useDeleteSingleNotificationMutation,
-  useReadSingleNotificationMutation
+  useReadSingleNotificationMutation,
+  useCheckAvailabilityTripByIdMutation,
+  useCreateBookingMutation
 } = authApi;

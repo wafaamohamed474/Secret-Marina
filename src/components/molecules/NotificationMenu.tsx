@@ -1,8 +1,3 @@
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import BellWithBadge from "../atoms/BellWithBadge";
 import { FaX } from "react-icons/fa6";
 import alertNotificationImg from "@/assets/images/Group 18.png";
@@ -12,6 +7,13 @@ import {
   useGetNotificationsQuery,
   useReadSingleNotificationMutation,
 } from "@/store/services/authApi";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 export function NotificationMenu() {
   const { data, refetch } = useGetNotificationsQuery({});
@@ -28,33 +30,35 @@ export function NotificationMenu() {
   };
 
   const isRead = (notify: any) => !!notify?.read_at;
-  console.log("notifications", data);
-
   return (
-    <Popover>
-      <PopoverTrigger asChild>
+    <Dialog>
+      <DialogTrigger asChild>
         <BellWithBadge count={data?.countUnreadNotifications} />
-      </PopoverTrigger>
-      <PopoverContent
-        className="bg-white z-9999 mt-5 border py-10 px-0 w-screen md:w-[80vw] lg:w-[60vw] "
-        align="end"
-        sideOffset={10}
-        side="bottom"
+      </DialogTrigger>
+      <DialogContent
+        className="w-full max-w-md h-full sm:h-auto  md:max-w-2xl lg:max-w-3xl bg-(--background)  z-10000   flex flex-col py-10 px-0
+           justify-center shadow-[0_0_2px_#008AEF]  border-0 lg:top-22
+    lg:left-0
+    xl:translate-x-1/4
+    lg:translate-x-0
+    lg:translate-y-0"
       >
         <div className="grid gap-8 ">
           <div className="space-y-5">
-            <h2 className="leading-none font-semibold text-base text-center text-(--primary)">
-              Notification
-            </h2>
+            <DialogHeader>
+              <DialogTitle className="leading-none font-semibold text-base text-center text-(--primary)">
+                Notification
+              </DialogTitle>
+            </DialogHeader>
           </div>
-          <div className="max-h-100  overflow-y-auto">
+          <div className="h-full md:max-h-80  overflow-y-auto">
             {data?.notifications.map((notfiy: any) => (
               <div
                 onClick={() => handleRead(notfiy.id)}
                 key={notfiy.id}
                 className={`flex items-center justify-between ${
                   isRead(notfiy) ? "bg-white" : "bg-(--card-bg)"
-                } px-5 py-3 w-full border-b border-(--input-border) cursor-pointer`}
+                } px-5 py-3 w-full border-b border-(--input-border) cursor-pointer gap-4`}
               >
                 <div className="flex items-center justify-between gap-2 md:gap-4">
                   <div>
@@ -78,7 +82,7 @@ export function NotificationMenu() {
             ))}
           </div>
         </div>
-      </PopoverContent>
-    </Popover>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -22,7 +22,7 @@ export default function BookingCard({ data, refetch }: BookingCardProps) {
 
     return `${day} ${month} ${year}`;
   }
-  console.log("all data", data);
+ 
   return (
     <div className="rounded-2xl shadow-[0_0_3px_0_var(--primary)] bg-(--background) relative overflow-hidden ">
       <div className=" bg-(--primary) flex justify-between items-center p-3">

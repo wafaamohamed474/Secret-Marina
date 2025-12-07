@@ -4,13 +4,11 @@ export default function Rating({ rating = 0 }) {
   const stars = Array.from({ length: 5 }, (_, i) => i < rating);
 
   return (
-    <div className="flex items-center gap-2 py-3">
+    <div className={`flex items-center gap-2 pb-2`}>
       {stars.map((filled, i) => (
         <FaStar
           key={i}
-          className={`text-base ${
-            filled ? "text-amber-200" : "text-gray-200"
-          }`}
+          className={`text-base ${filled ? "text-amber-200" : "text-gray-200"}`}
         />
       ))}
 

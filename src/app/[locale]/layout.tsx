@@ -9,6 +9,7 @@ import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import AuthDialog from "@/features/auth/AuthDialog";
 import { cookies } from "next/headers";
+import BookingDialog from "@/features/booking/BookingDialog";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -58,6 +59,7 @@ export default async function RootLayout({
             <Navbar isAuth={isAuth} />
             {children}
             <AuthDialog />
+            <BookingDialog/>
             <Footer />
           </NextIntlClientProvider>
         </Providers>

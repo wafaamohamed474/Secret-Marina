@@ -25,6 +25,7 @@ import TripGallery from "@/components/molecules/TripGallery";
 import TripLocation from "@/components/molecules/TripLocation";
 import TripMap from "@/components/molecules/TripLocation";
 import TripFacilities from "@/components/molecules/TripFacilities";
+import { BookingButton } from "../booking/BookingButton";
 
 interface SingleTripDetailsProps {
   trip?: ServiceItem;
@@ -95,12 +96,7 @@ const SingleTripDetailes = ({ trip }: SingleTripDetailsProps) => {
                 />
 
                 <TripServiceBtn
-                  label={
-                    typeof trip?.destination === "object" &&
-                    trip?.destination !== null
-                      ? trip.destination.title ?? ""
-                      : trip?.destination ?? ""
-                  }
+                  label={trip?.location ?? ""}
                   Icon={FaLocationDot}
                 />
 
@@ -186,7 +182,7 @@ const SingleTripDetailes = ({ trip }: SingleTripDetailsProps) => {
             </div>
 
             <div className="flex justify-end pt-5">
-              <FormBtn label="Book Now" className="w-fit" />
+              {trip && <BookingButton data={trip} />}
             </div>
           </div>
         </div>

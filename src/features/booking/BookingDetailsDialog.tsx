@@ -1,6 +1,7 @@
 "use client";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -16,7 +17,7 @@ import { facilityIcons } from "@/lib/icons";
 import { FaRegClock, FaToilet, FaUser } from "react-icons/fa";
 import TripServiceBtn from "@/components/atoms/TripServiceBtn";
 import { FaLocationDot } from "react-icons/fa6";
-import { BedDouble, Sofa } from "lucide-react";
+import { BedDouble, Sofa, X } from "lucide-react";
 import MainText from "@/components/atoms/MainText";
 import Rating from "@/components/molecules/Rating";
 import TicketCard from "./TicketCard";
@@ -37,7 +38,6 @@ export default function BookingDetailsDialog({
     lang: currentLocale,
   });
 
-  console.log("data from details", data?.data);
   const trip = data?.data?.service || [];
   const isHaveCateigories = trip?.category == null ? false : true;
   return (
@@ -49,7 +49,7 @@ export default function BookingDetailsDialog({
       </DialogTrigger>
 
       <DialogContent
-        className="w-full max-w-md h-full sm:h-auto  md:max-w-2xl lg:max-w-3xl bg-(--background) md:px-10 z-1000   flex flex-col gap-6
+        className="w-full max-w-md h-full sm:h-auto  md:max-w-2xl lg:max-w-3xl bg-(--background) md:px-10 z-1000   flex flex-col gap-4
       justify-center  rounded-4xl border-0"
       >
         <DialogHeader>
@@ -82,7 +82,7 @@ export default function BookingDetailsDialog({
               </div>
             </div>
 
-            <p className="text-base font-medium   text-(--paragraph-text) pt-1">
+            <p className="text-base font-medium   text-(--paragraph-text)">
               {trip?.trip?.title}
             </p>
 
@@ -96,12 +96,7 @@ export default function BookingDetailsDialog({
                 />
 
                 <TripServiceBtn
-                  label={
-                    typeof trip?.destination === "object" &&
-                    trip?.destination !== null
-                      ? trip.destination.title ?? ""
-                      : trip?.destination ?? ""
-                  }
+                  label={trip?.location ?? ""}
                   Icon={FaLocationDot}
                 />
 
@@ -138,7 +133,7 @@ export default function BookingDetailsDialog({
 
             {isHaveCateigories && (trip?.facilities?.length || 0) > 0 && (
               <div>
-                <p className="text-base font-semibold   text-(--text-black) my-4">
+                <p className="text-base font-semibold   text-(--text-black) my-2">
                   Available Facilities
                 </p>
 
@@ -148,10 +143,10 @@ export default function BookingDetailsDialog({
             <div>
               {trip?.description != null && (
                 <div>
-                  <p className="text-base font-semibold   text-(--text-black) my-4">
+                  <p className="text-base font-semibold   text-(--text-black) my-2">
                     Description
                   </p>
-                  <div className="bg-(--paragraph-bg) p-2 rounded-xl my-4 text-end">
+                  <div className="bg-(--paragraph-bg) p-2 rounded-xl my-2 text-end">
                     <MainText>{trip?.description ?? ""}</MainText>
                   </div>
                 </div>

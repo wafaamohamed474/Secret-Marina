@@ -27,7 +27,6 @@ export default function AuthDialog() {
 
       case "verify":
         return <VerificationForm />;
-
       default:
         return <LoginForm />;
     }
