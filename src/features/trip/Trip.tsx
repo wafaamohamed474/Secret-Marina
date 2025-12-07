@@ -68,7 +68,7 @@ const SingleTripDetailes = ({ trip }: SingleTripDetailsProps) => {
               </p>
               <div className="flex items-center  gap-1 ">
                 <span className="text-xl text-(--primary) font-semibold">
-                  {trip?.price}
+                  {trip?.price_after_discount}
                 </span>
                 <div className="w-5 h-5 relative">
                   <Image

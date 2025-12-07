@@ -3,8 +3,11 @@ import img1 from "@/assets/images/img1.jpg";
 import img2 from "@/assets/images/img2.jpg";
 import img3 from "@/assets/images/img3.jpg";
 import { Button } from "@/components/ui/button";
+import { useDispatch } from "react-redux";
+import { openDialog } from "@/store/services/authDialogSlice";
 
 export default function About() {
+  const dispatch = useDispatch()
   return (
     <section className="container-custom w-full  py-20 grid grid-cols-1 lg:grid-cols-2 items-center gap-8" id="about">
       {/* Left: Images (2 stacked rows) */}
@@ -50,7 +53,7 @@ export default function About() {
           Join thousands of sea lovers exploring with Secret Marina today.
         </span>
         <div className="flex justify-start">
-          <Button variant="gradient" className="w-auto px-10 py-6">
+          <Button variant="gradient" className="w-auto px-10 py-6" onClick={()=>dispatch(openDialog({screen : 'login'}))}>
             Explore Now
           </Button>
         </div>

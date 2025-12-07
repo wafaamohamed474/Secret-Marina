@@ -156,7 +156,7 @@ export default function BookingDetailsDialog({
               title={trip?.title}
               type={trip?.category?.title}
               date={data?.data?.date}
-              time={`${data?.data?.start_time} ${data?.data?.end_time}`}
+              time={`${data?.data?.start_time} to ${data?.data?.end_time}`}
               location={trip?.destination?.title}
               total={data?.data?.total_price}
               guests={trip?.guest_capacity}

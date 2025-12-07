@@ -12,7 +12,8 @@ interface TimeSlotsProps {
   id: string;
   selectedDate: string;
   duration: number;
-  onSelect: (start24: string, end24: string) => void;
+  onSelect: (start24: string, end24: string, labelStart: string, labelEnd: string) => void;
+
 }
 
 export default function TimeSlots({
@@ -54,7 +55,8 @@ export default function TimeSlots({
         start: formatTo12Hour(current),
         duration,
         labelStart: formatTo12Hour(current),
-        labelFull: `${formatTo12Hour(current)} - ${formatTo12Hour(next)}`,
+        labelEnd: formatTo12Hour(next),
+        labelFull: `${formatTo12Hour(current)}  ${formatTo12Hour(next)}`,
       });
 
       current = next;
@@ -71,7 +73,7 @@ export default function TimeSlots({
     const end24 = calcEndTime(start24, slot.duration);
 
     setSelected({ start24, end24 });
-    onSelect(start24, end24);
+    onSelect(start24, end24, slot.labelStart, slot.labelEnd);
   };
 
   // ==========================

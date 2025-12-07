@@ -59,15 +59,15 @@ export default function Payment() {
         title={paymentData?.data?.title}
         type={paymentData?.data?.trip?.title}
         date={paymentData?.date}
-        time={`${paymentData?.start_time}-${paymentData?.end_time}`}
+        time={`${paymentData?.start_label} to ${paymentData?.end_label}`}
         location={paymentData?.data?.location}
-        total={paymentData?.data?.price_after_discount}
+        total={paymentData?.totalPrice}
         guests={paymentData?.data?.guest_capacity}
       />
       <PaymentMethods onSelect={(val)=>setMethod(val)}/>
       <div className="flex justify-between items-center">
         <Button variant={"outline"}>
-          Total {paymentData?.data?.price_after_discount} SAR
+          Total {paymentData?.totalPrice} SAR
         </Button>
         <Button className="px-12" type="submit" onClick={handleBooking} disabled={!method || isLoading}>
           {isLoading ? "Booking..." : "Book"}

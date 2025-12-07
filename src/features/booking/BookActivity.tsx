@@ -21,6 +21,9 @@ export default function BookActivity() {
   const [selectedStart, setSelectedStart] = useState<string | null>(null);
   const [selectedEnd, setSelectedEnd] = useState<string | null>(null);
   const [guests, setGuests] = useState({ adults: 1, children: 0 });
+   const [labels, setLabels] = useState({ start: '', end: "" });
+  const totalPrice = (guests.adults + guests.children * (paymentData?.child_free ? 0 : 1)) * paymentData?.price_after_discount || 0;
+
   const [checkAvailability, { data, isLoading, isError }] =
     useCheckAvailabilityTripByIdMutation();
 
@@ -42,6 +45,7 @@ export default function BookActivity() {
         date: formattedDate,
         start_time: selectedStart,
         end_time: selectedEnd,
+        
       });
     }
   }, [id, formattedDate, selectedStart, selectedEnd, checkAvailability]);
@@ -57,8 +61,11 @@ export default function BookActivity() {
         date: formattedDate,
         start_time: selectedStart,
         end_time: selectedEnd,
+        start_label : labels.start,
+        end_label : labels.end,
         isTrip: false,
         data : paymentData,
+        totalPrice : totalPrice,
         adult_tickets: guests.adults,
         child_tickets: guests.children
 
@@ -81,9 +88,10 @@ export default function BookActivity() {
           id={id}
           selectedDate={formattedDate}
           duration={Number(paymentData?.duration)}
-          onSelect={(start, end) => {
+          onSelect={(start, end ,labelStart , labelEnd) => {
             setSelectedStart(start);
             setSelectedEnd(end);
+            setLabels({ start : labelStart , end:labelEnd})
           }}
         />}
         
@@ -95,7 +103,7 @@ export default function BookActivity() {
         />
           <div className="flex md:flex-col justify-between items-center gap-2">
             <Button variant={"outline"}>
-              Total {paymentData?.price_after_discount} SAR
+              Total {totalPrice} SAR
             </Button>
             <Button className="px-12" onClick={handleNext} disabled={!isValid}>
               Next

@@ -12,6 +12,7 @@ export default function BookTrip() {
   );
   const [selectedStart, setSelectedStart] = useState<string | null>(null);
   const [selectedEnd, setSelectedEnd] = useState<string | null>(null);
+  const [labels, setLabels] = useState({ start: '', end: "" });
   const dispatch = useDispatch();
   const { paymentData } = useSelector((state: RootState) => state.bookDialog);
 
@@ -35,6 +36,9 @@ export default function BookTrip() {
       date: formattedDate,
       start_time: selectedStart,
       end_time: selectedEnd,
+      start_label : labels.start,
+      end_label : labels.end,
+      totalPrice : paymentData?.price_after_discount,
       isTrip: true,
       data : paymentData
     })
@@ -56,9 +60,10 @@ export default function BookTrip() {
           id={id}
           selectedDate={formattedDate}
           duration={Number(paymentData?.duration)}
-          onSelect={(start, end) => {
+          onSelect={(start, end,labelStart, labelEnd) => {
             setSelectedStart(start);
             setSelectedEnd(end);
+            setLabels({ start : labelStart , end:labelEnd})
           }}
         />}
        

@@ -4,6 +4,7 @@ export interface TimeSlot {
   start: string;
   duration: number;
   labelStart: string;
+  labelEnd: string;
   labelFull: string;
 }
 
